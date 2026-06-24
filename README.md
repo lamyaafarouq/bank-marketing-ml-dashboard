@@ -22,5 +22,6 @@ bank-additional-full.csv from the UCI Bank Marketing dataset.
 - Random Forest
 
 ## Run Dashboard
+
 ```bash
 streamlit run app.py
