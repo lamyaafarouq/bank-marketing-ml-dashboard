@@ -378,14 +378,36 @@ elif page == "Prediction Studio":
     def input_widget(feature, container):
         with container:
             series = df[feature]
-            if series.dtype == "object":
-                options = sorted(series.dropna().unique())
-                default = series.mode().iloc[0]
-                values[feature] = st.selectbox(pretty_label(feature), options, index=options.index(default))
+
+            if (
+                pd.api.types.is_string_dtype(series)
+                or str(series.dtype) == "category"
+                or not pd.api.types.is_numeric_dtype(series)
+            ):
+                options = sorted(series.dropna().astype(str).unique())
+                default = str(series.mode().iloc[0])
+                values[feature] = st.selectbox(
+                    pretty_label(feature),
+                    options,
+                    index=options.index(default),
+                )
+
             elif pd.api.types.is_integer_dtype(series):
-                values[feature] = st.number_input(pretty_label(feature), min_value=int(series.min()), max_value=int(series.max()), value=int(series.median()), step=1)
+                values[feature] = st.number_input(
+                    pretty_label(feature),
+                    min_value=int(series.min()),
+                    max_value=int(series.max()),
+                    value=int(series.median()),
+                    step=1,
+                )
+
             else:
-                values[feature] = st.number_input(pretty_label(feature), value=float(series.median()), step=0.01, format="%.3f")
+                values[feature] = st.number_input(
+                    pretty_label(feature),
+                    value=float(series.median()),
+                    step=0.01,
+                    format="%.3f",
+                )
 
     st.markdown('<div class="form-shell">', unsafe_allow_html=True)
     with st.form("prediction_form"):
