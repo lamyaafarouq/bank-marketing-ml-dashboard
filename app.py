@@ -456,4 +456,4 @@ else:
         st.markdown("### Deployment note")
         st.caption("The saved pipeline contains preprocessing and the model together, so prediction inputs are transformed consistently with training.")
 
-st.markdown('<div class="footer">InsightFlow · Bank Marketing Classification · CDSP Final Project</div>', unsafe_allow_html=True)
+st.markdown('<div class="footer">InsightFlow · Bank Marketing Classification · CDSP Final Project </div>', unsafe_allow_html=True)
